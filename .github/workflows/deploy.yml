@@ -1,0 +1,23 @@
+name: Deploy to server
+
+on:
+  push:
+    branches: [master, main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host_key_check: "false"
+          script: |
+            cd /opt/cashex
+            git fetch origin
+            git reset --hard origin/${{ github.ref_name }}
+            systemctl restart cashex-bot
+            echo "Deployed and restarted."

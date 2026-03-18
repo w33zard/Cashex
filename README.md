@@ -57,3 +57,44 @@ python bot.py
 | **Как нас найти** | Адрес и режим работы |
 
 Дальше можно добавить логику создания заявок на обмен и, при необходимости, получение курсов из API.
+
+---
+
+## Автодеплой на сервер при push (GitHub Actions)
+
+При каждом `git push` в ветку `master` или `main` GitHub сам подключается к серверу, подтягивает код и перезапускает бота.
+
+### Однократная настройка на сервере
+
+На сервере `/opt/cashex` должен быть git-репозиторий. Если вы разворачивали бота через SCP, выполните один раз:
+
+```bash
+ssh root@194.67.88.36
+cd /opt/cashex
+git init
+git remote add origin https://github.com/w33zard/Cashex.git
+git fetch origin
+git checkout -t origin/master
+# Файлы .env и venv не трогаем — они останутся на месте
+```
+
+### Секреты в репозитории GitHub
+
+В настройках репозитория: **Settings → Secrets and variables → Actions** создайте:
+
+| Секрет           | Значение |
+|------------------|----------|
+| `SSH_HOST`       | IP или хост сервера, например `194.67.88.36` |
+| `SSH_USER`       | Пользователь SSH, например `root` |
+| `SSH_PRIVATE_KEY`| Приватный SSH-ключ для этого пользователя |
+
+Как получить ключ (на своём компьютере):
+
+```bash
+ssh-keygen -t ed25519 -C "github-deploy" -f cashex_deploy -N ""
+```
+
+- Публичный ключ `cashex_deploy.pub` добавьте на сервер в `~/.ssh/authorized_keys` пользователя `root` (или того, кого указали в `SSH_USER`).
+- Содержимое файла `cashex_deploy` (приватный ключ) целиком вставьте в секрет `SSH_PRIVATE_KEY`.
+
+После этого при каждом пуше в `master`/`main` workflow «Deploy to server» будет обновлять код на сервере и перезапускать `cashex-bot`.
