@@ -1,5 +1,7 @@
 .env
 venv/
+deploy_key
+deploy_key.pub
 __pycache__/
 *.py[cod]
 *.pyo
