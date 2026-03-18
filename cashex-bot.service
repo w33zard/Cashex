@@ -1,0 +1,15 @@
+[Unit]
+Description=CASHEX Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/cashex
+ExecStart=/usr/bin/python3 /opt/cashex/bot.py
+Restart=always
+RestartSec=10
+EnvironmentFile=/opt/cashex/.env
+
+[Install]
+WantedBy=multi-user.target
