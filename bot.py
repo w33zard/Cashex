@@ -17,6 +17,7 @@ from telegram.ext import (
 from telegram.constants import ParseMode
 
 import config
+import rates
 
 load_dotenv()
 logging.basicConfig(
@@ -61,12 +62,20 @@ def get_about_text() -> str:
 
 
 def get_rates_text() -> str:
+    pair = rates.fetch_usdt_rub_rates()
+    if pair:
+        buy, sell = pair
+        buy_str = f"{buy:.2f} ₽"
+        sell_str = f"{sell:.2f} ₽"
+    else:
+        buy_str = config.RATE_BUY_USDT_FALLBACK
+        sell_str = config.RATE_SELL_USDT_FALLBACK
     return (
         "📊 <b>Курсы</b>\n\n"
-        "Актуальные курсы обмена:\n\n"
-        f"🟢 Покупка USDT: {config.RATE_BUY_USDT}\n"
-        f"🔴 Продажа USDT: {config.RATE_SELL_USDT}\n\n"
-        "Курсы обновляются. Для точного курса на вашу сумму создайте заявку через «Обмен» или /exchange."
+        "Курс USDT/RUB (источник: Rapira, покупка +0.5%, продажа −0.5%):\n\n"
+        f"🟢 Покупка USDT: {buy_str}\n"
+        f"🔴 Продажа USDT: {sell_str}\n\n"
+        "Для точного курса на вашу сумму создайте заявку через «Обмен» или /exchange."
     )
 
 

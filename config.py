@@ -12,7 +12,6 @@ CONTACT_TELEGRAM = "@cashex_support"
 # Текст "О нас" — годы работы и т.д.
 ABOUT_YEARS = "3"  # лет на рынке обмена
 
-# Курсы (можно потом подключать API)
-# Пока заглушки — замените на реальные курсы или API
-RATE_BUY_USDT = "по запросу"
-RATE_SELL_USDT = "по запросу"
+# Курсы — по умолчанию при недоступности Rapira API
+RATE_BUY_USDT_FALLBACK = "по запросу"
+RATE_SELL_USDT_FALLBACK = "по запросу"

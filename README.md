@@ -43,7 +43,7 @@ python bot.py
 - `ADDRESS` — адрес офиса (для приветствия и «Как нас найти»).
 - `CONTACT_PHONE`, `CONTACT_EMAIL`, `CONTACT_TELEGRAM` — контакты для «Связаться с нами».
 - `ABOUT_YEARS` — сколько лет на рынке (для блока «О нас»).
-- `RATE_BUY_USDT`, `RATE_SELL_USDT` — курсы покупки/продажи USDT (или «по запросу»).
+- Курсы USDT/RUB берутся с **Rapira** (api.rapira.net): покупка +0.5%, продажа −0.5%. При недоступности API показывается текст из `RATE_BUY_USDT_FALLBACK` и `RATE_SELL_USDT_FALLBACK`.
 
 ## Команды и кнопки
 
