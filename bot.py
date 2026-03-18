@@ -72,7 +72,7 @@ def get_rates_text() -> str:
         sell_str = config.RATE_SELL_USDT_FALLBACK
     return (
         "📊 <b>Курсы</b>\n\n"
-        "Курс USDT/RUB (источник: Rapira, покупка +0.5%, продажа −0.5%):\n\n"
+        "Актуальные курсы обмена:\n\n"
         f"🟢 Покупка USDT: {buy_str}\n"
         f"🔴 Продажа USDT: {sell_str}\n\n"
         "Для точного курса на вашу сумму создайте заявку через «Обмен» или /exchange."
